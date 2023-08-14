@@ -183,13 +183,12 @@ export class Chroma extends VectorStore {
     const [firstMetadatas] = metadatas;
 
     const results: [Document, number][] = [];
-    for (let i = 0; i < firstIds.length; i += 1) {
-      let metadata: Document["metadata"] = {};
-      const storedMetadata = firstMetadatas?.[i];
-
-      if (storedMetadata && storedMetadata.locFrom && storedMetadata.locTo) {
+    for (let i = 0; i < firstIds.length; i += 1) {      
+      let metadata: Document["metadata"] = firstMetadatas?.[i] ?? {};
+    
+      if (metadata.locFrom && metadata.locTo) {
         metadata = {
-          ...firstMetadatas[i],
+          ...metadata,
           loc: {
             lines: {
               from: storedMetadata.locFrom,
